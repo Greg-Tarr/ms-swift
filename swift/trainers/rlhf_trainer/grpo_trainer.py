@@ -673,7 +673,7 @@ class GRPOTrainer(RolloutTrainerMixin, SwiftMixin, HFGRPOTrainer):
             input_ids = batch_encoded_inputs['input_ids']
             valid_lengths = (input_ids != self.processing_class.pad_token_id).sum(-1)
             logits_to_keep = valid_lengths.max().item() - 1 
-            # logits_to_keep = (labels.shape[-1] - (torch.ne(labels, -100).int().argmax(-1))).max().item()
+            
             extra_kwargs = {
                 'completion_mask':
                 labels[:, -logits_to_keep:] != -100,
