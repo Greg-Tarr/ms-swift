@@ -244,12 +244,11 @@ class GRPOTrainer(RolloutTrainerMixin, SwiftMixin, HFGRPOTrainer):
                     token_ids = completion
                 elif isinstance(completion, dict):
                     token_ids = completion['token_ids']
-                #completions[i] = self.processing_class.decode(token_ids)
-            # TODO(GREG): i changed these lines!
+                completions[i] = self.processing_class.decode(token_ids)
             valid_messages = self._gather_and_flatten(messages, flatten_level=0)
-            #valid_completions = self._gather_and_flatten(completions, flatten_level=0)
+            valid_completions = self._gather_and_flatten(completions, flatten_level=0)
             self._logs['prompt'].extend(self._apply_chat_template_to_messages_list(valid_messages))
-            #self._logs['completion'].extend(valid_completions)
+            self._logs['completion'].extend(valid_completions)
 
 
             # Example: if you want to log extra data in the wandb / swanlab table,
